@@ -1,4 +1,4 @@
-# 🎥ANÁLISE DE FILMES🎬
+# 🎥MERCADO DE FILMES🎬
 Uma análise de filmes lançados no perído de 1980 à 2020. Fazendo um levantamento de quanto eles lucraram, quais filmes mais fizeram bilheteria, qual estúdio lucrou mais, qual diretor foi mais lucrativo, qual filme teve maior índice de ganho e qual ator é o mais rentável.
 
 Os dados foram obtidos no site Kaggle, feito por Daniel Grijalva.
@@ -31,12 +31,12 @@ pd.options.display.float_format = "{:,.1f}".format
 ```
 df = pd.read_csv('movies.csv', encoding='latin-1')
 ```
-Usando o comando `df.head()` é possível as 5 primeiras linhas da tabela.
+Usando o comando `df.head()` é possível ver as 5 primeiras linhas da tabela.
 
 ![tabela-dataset](https://github.com/user-attachments/assets/6df1d1f5-eba0-407f-92e2-6c6ec52201b4)
 
 ## Traduzindo os nomes das colunas
-Para um melhor entendimento do que se tratam os valores das colunas, decidi traduzir os nomes delas.
+Para um melhor entendimento do que tratam os valores das colunas, decidi traduzir os nomes delas.
 ```
 colunas = ['nome', 'classificação', 'gênero', 'ano', 'lançamento', 'nota', 'votos', 'diretor', 'roterista', 'estrela', 'país', 'orçamento', 'bilheteria', 'estúdio', 'duração']
 df.columns = colunas
@@ -46,14 +46,14 @@ Chamando o comando `df.head()` a tabela fica assim:
 ![tabela-traduzido](https://github.com/user-attachments/assets/06b5ad3f-7be5-4752-9eff-7e516083ccb3)
 
 ## As classificações com mais filmes
-Para verificar quais as faxas etárias ue contém mais filmes, usei os seguintes comandos:
+Para verificar quais as faxas etárias que contém mais filmes, usei os seguintes comandos:
 ```
 classificacao = df['classificação'].value_counts()
 (classificacao/df.shape[0]*100).apply(lambda x: f'{x: 0.2f} %')
 ```
 O que gerou o seguinte resultado:
 
-![tabela-classificacoes](https://github.com/user-attachments/assets/c145a84c-9de0-4026-8f20-556404ce3f0d)
+![tabela-classificacoes](https://github.com/user-attachments/assets/79f03fbe-65ba-4cb5-ab4c-a0dbec87c752)
 
 Já o gráfico ficou da seguinte forma:
 ![newplot](https://github.com/user-attachments/assets/0c9f7f9f-b4d2-41d6-ab95-434a80ffc2a3)
@@ -65,16 +65,17 @@ Com os seguintes comandos é possível classificar os filmes por bilheteria:
 ```
 print('As 10 maiores bilheterias do cinema')
 bil = df.sort_values(by='bilheteria', ascending=False, ignore_index=True)
+top_bil = bil[['nome', 'bilheteria']]
 ```
-E usando o comando `bil.head(10)` podemos visualizar como ficou a tabela:
+E usando o comando `top_bil.head(10)` podemos visualizar como ficou a tabela:
 
-![tabela-bilheteria](https://github.com/user-attachments/assets/cc146e86-75a0-4c3a-a861-3472406fb9e3)
+![tabela-bilheteria](https://github.com/user-attachments/assets/b81fc116-1956-4f91-8bf4-2cf10e3634b3)
 
 ![newplot2](https://github.com/user-attachments/assets/f3144184-109b-4df5-a23d-68e7be21d13e)
 
 ## Top 10 Filmes mais bem avaliados
 
-![tabela-avaliados](https://github.com/user-attachments/assets/0a32ab60-e300-4355-bd00-2776ecfc4b98)
+![tabela-avaliados](https://github.com/user-attachments/assets/da46d572-e683-4052-8cd6-1d09b3415150)
 
 ![grafico-avaliados](https://github.com/user-attachments/assets/e3203eba-50b7-4a2b-88b0-886fd65687df)
 
@@ -109,7 +110,7 @@ E usando o comando `bil.head(10)` podemos visualizar como ficou a tabela:
 ![grafico-estudio](https://github.com/user-attachments/assets/150aa7d9-fe77-4bf2-b455-5d077f6ae4f8)
 
 ## Relação Bilheteria x Orçamento
-Para poder visualizar a relação entre quanto o filmes custou e quanto ele lucrou, fiz os seguintes comandos:
+Para poder visualizar a relação entre quanto o filme custou e quanto ele lucrou, fiz o seguinte algoritmo:
 ```
 fig = px.scatter(
     df,
@@ -130,12 +131,12 @@ Chamando o comando `iplot(fig)`, temos o seguinte gráfico:
 ![grafico-bil_orc](https://github.com/user-attachments/assets/d0947c41-867f-41f1-8913-8de763879452)
 
 ## Top 10 Filmes com maior índice de lucro
-Agora, obter os maiores índices de orçamento, criei o seguinte algorítmo:
+Agora, para obter os maiores índices de orçamento, criei o seguinte algoritmo:
 ```
 df['% lucro'] = (df['bilheteria'] / df['orçamento']) * 100
 pontos_porcent = df[['nome', 'bilheteria', 'orçamento', '% lucro']].sort_values(by='% lucro', ascending=False, ignore_index=True)
 ```
-Nela, criei uma nova tabela no Dateframe, que leva o percentual de lucro que cada filme obteve.
+Nela, criei uma nova tabela no Dataframe, que leva o percentual de lucro que cada filme obteve.
 Com o comando `pontos_porcent.head(10)`, geramos a seguinte tabela:
 
 ![tabela-percentual](https://github.com/user-attachments/assets/b4b7c071-4647-49e3-a3d1-84f8178fbcd3)
